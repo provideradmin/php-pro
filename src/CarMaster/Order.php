@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 namespace CarMaster;
 
 use CarMaster\Client;
 use CarMaster\Car;
+use newrelic\DistributedTracePayload;
 
 class Order
 {
@@ -16,9 +18,16 @@ class Order
     private Car $car;
     private bool $paid;
     private ?string $paymentDate;
+    private array $orderData;
 
-    public function __construct(string $orderNumber, Service $service, array $parts, array $materials, Client $client, Car $car)
-    {
+    public function __construct(
+        string $orderNumber,
+        Service $service,
+        array $parts,
+        array $materials,
+        Client $client,
+        Car $car
+    ) {
         $this->orderNumber = $orderNumber;
         $this->creationDate = date('Y-m-d H:i:s'); // Текущая дата и время
         $this->service = $service;
@@ -28,6 +37,7 @@ class Order
         $this->car = $car;
         $this->paid = false; // По умолчанию заказ не оплачен
         $this->paymentDate = null; // По умолчанию дата оплаты не установлена
+        $this->orderData = [];
     }
 
     // Геттеры
@@ -101,6 +111,14 @@ class Order
     {
         $this->paid = false;
         $this->paymentDate = null;
+    }
+
+//принимает массив объектов продуктов и добавляет информацию о них в массив данных заказа
+    public function addProductsToOrderData(array $products): void
+    {
+        foreach ($products as $product) {
+            $this->orderData[$product->getType()][] = $product->getProductData();
+        }
     }
 }
 

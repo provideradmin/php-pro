@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CarMaster;
@@ -28,5 +29,10 @@ class Part extends Product
     public function sell(int $quantity): void
     {
         $this->removeFromInventory($quantity);
+    }
+
+    public function getType(): string
+    {
+        return 'parts';
     }
 }

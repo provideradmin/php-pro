@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CarMaster;
@@ -60,6 +61,16 @@ abstract class Product
             // Обработка ошибки: попытка списания большего количества, чем имеется на складе
             throw new InventoryException('Недостаточное количество товара на складе.');
         }
+    }
+
+// общий функционал по сбору данных про продукт выношу в родительский класс
+    public function getProductData(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'quantity' => $this->getQuantity(),
+            'cost' => $this->getCost()
+        ];
     }
 }
 

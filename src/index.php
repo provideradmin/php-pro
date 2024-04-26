@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CarMaster;
@@ -157,7 +158,9 @@ $style->title('Данные заказа:');
 $style->writeln("Номер заказа: <info>{$order->getOrderNumber()}</info>");
 $style->writeln("Дата: <info>{$order->getCreationDate()}</info>");
 $style->writeln("Клиент: <info>{$order->getClient()->getName()}</info>");
-$style->writeln("Машина: <info>{$order->getCar()->getBrand()} {$order->getCar()->getModel()} ({$order->getCar()->getYear()})</info>");
+$style->writeln(
+    "Машина: <info>{$order->getCar()->getBrand()} {$order->getCar()->getModel()} ({$order->getCar()->getYear()})</info>"
+);
 $style->writeln("Услуга: <info>{$order->getService()->getName()}</info>");
 
 // Вывод информации о запчастях
@@ -208,30 +211,20 @@ $orderData = [
     'order_number' => $order->getOrderNumber(),
     'creation_date' => $order->getCreationDate(),
     'client_name' => $order->getClient()->getName(),
-    'car_info' => $order->getCar()->getBrand() . ' ' . $order->getCar()->getModel() . ' (' . $order->getCar()->getYear() . ')',
+    'car_info' => $order->getCar()->getBrand() . ' ' . $order->getCar()->getModel() . ' (' . $order->getCar()->getYear(
+        ) . ')',
     'service_name' => $order->getService()->getName(),
     'parts' => [],
     'materials' => [],
     'total_cost' => $order->getTotalCost()
 ];
 
-// Добавляем информацию о запчастях
-foreach ($order->getParts() as $part) {
-    $orderData['parts'][] = [
-        'name' => $part->getName(),
-        'quantity' => $part->getQuantity(),
-        'cost' => $part->getCost()
-    ];
-}
-
 // Добавляем информацию о материалах
-foreach ($order->getMaterials() as $material) {
-    $orderData['materials'][] = [
-        'name' => $material->getName(),
-        'quantity' => $material->getQuantity(),
-        'cost' => $material->getCost()
-    ];
-}
+$order->addProductsToOrderData($order->getParts());
+
+//// Добавляем информацию о запчастях
+$order->addProductsToOrderData($order->getMaterials());
+
 
 // Преобразуем данные в формат JSON
 $orderJson = json_encode($orderData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -253,5 +246,3 @@ try {
     // Записываем информацию об ошибке в лог
     $log->error('Ошибка при записи данных заказа в файл', ['exception_message' => $exception->getMessage()]);
 }
-
-
