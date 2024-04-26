@@ -1,0 +1,32 @@
+{
+    "order_number": "121212",
+    "creation_date": "2024-04-26 08:24:33",
+    "client_name": "Dr. Mustafa Yundt",
+    "car_info": "Toyota Camry (2018)",
+    "service_name": "Замена масла",
+    "parts": [
+        {
+            "name": "колодки",
+            "quantity": 2,
+            "cost": 500
+        },
+        {
+            "name": "фильтр",
+            "quantity": 1,
+            "cost": 100
+        }
+    ],
+    "materials": [
+        {
+            "name": "Расходный материал Масло",
+            "quantity": 1,
+            "cost": 20
+        },
+        {
+            "name": "Расходный материал Смазка",
+            "quantity": 1,
+            "cost": 15
+        }
+    ],
+    "total_cost": 735
+}

@@ -8,6 +8,13 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 use CarMaster\Exceptions\CarException;
 use CarMaster\Exceptions\InventoryException;
 use Faker\Factory;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 $faker = Factory::create();
 $client1 = new Client($faker->name, $faker->email, $faker->phoneNumber);
@@ -124,3 +131,127 @@ try {
     // Ловим исключение и выводим сообщение об ошибке, указывая количество недостающих товаров
     echo "Ошибка: {$e->getMessage()}. Не хватает: $missingQuantity шт.\n";
 }
+
+// Инициализация Symfony Console
+$input = new ArgvInput();
+$output = new ConsoleOutput();
+$style = new SymfonyStyle($input, $output);
+
+// добавим клиентов для таблички
+$client2 = new Client($faker->name, $faker->email, $faker->phoneNumber);
+$client3 = new Client($faker->name, $faker->email, $faker->phoneNumber);
+
+
+// Вывод информации о клиентах
+$style->title('Данные клиентов:');
+$clientsData = [
+    [$client1->getName(), $client1->getEmail(), $client1->getPhone()],
+    [$client2->getName(), $client2->getEmail(), $client2->getPhone()],
+    [$client3->getName(), $client3->getEmail(), $client3->getPhone()]
+];
+$style->table(['Имя', 'Email', 'Телефон'], $clientsData, 'compact');
+
+
+// Вывод информации о заказе
+$style->title('Данные заказа:');
+$style->writeln("Номер заказа: <info>{$order->getOrderNumber()}</info>");
+$style->writeln("Дата: <info>{$order->getCreationDate()}</info>");
+$style->writeln("Клиент: <info>{$order->getClient()->getName()}</info>");
+$style->writeln("Машина: <info>{$order->getCar()->getBrand()} {$order->getCar()->getModel()} ({$order->getCar()->getYear()})</info>");
+$style->writeln("Услуга: <info>{$order->getService()->getName()}</info>");
+
+// Вывод информации о запчастях
+$partsData = [];
+foreach ($order->getParts() as $part) {
+    $partsData[] = [$part->getName(), "{$part->getQuantity()} x {$part->getCost()} грн"];
+}
+$style->table(['Запчасти', 'Стоимость'], $partsData);
+
+// Вывод информации о материалах
+$materialsData = [];
+foreach ($order->getMaterials() as $material) {
+    $materialsData[] = [$material->getName(), "{$material->getQuantity()} x {$material->getCost()} грн"];
+}
+$style->table(['Материалы', 'Стоимость'], $materialsData);
+
+// Вывод общей стоимости заказа
+$style->success("Всего: {$order->getTotalCost()} грн");
+
+
+// Создаем экземпляр Filesystem
+$filesystem = new Filesystem();
+
+// Путь к папке для файла заказа
+$directoryPath = dirname(__DIR__) . '/files/';
+// Проверяем существование папки, и если она уже есть, удаляем ее со всем содержимым
+if ($filesystem->exists($directoryPath)) {
+    try {
+        $filesystem->remove($directoryPath);
+    } catch (IOExceptionInterface $exception) {
+        echo "Ошибка при удалении папки: " . $exception->getMessage() . "\n";
+    }
+}
+
+// Создаем папку для файла заказа
+try {
+    $filesystem->mkdir($directoryPath);
+    echo "Папка для заказа успешно создана.\n";
+} catch (IOExceptionInterface $exception) {
+    echo "Ошибка при создании папки для заказа: " . $exception->getMessage() . "\n";
+}
+
+// Путь к файлу заказа
+$filePath = $directoryPath . '/order.json';
+
+// Создаем данные заказа для записи в файл
+$orderData = [
+    'order_number' => $order->getOrderNumber(),
+    'creation_date' => $order->getCreationDate(),
+    'client_name' => $order->getClient()->getName(),
+    'car_info' => $order->getCar()->getBrand() . ' ' . $order->getCar()->getModel() . ' (' . $order->getCar()->getYear() . ')',
+    'service_name' => $order->getService()->getName(),
+    'parts' => [],
+    'materials' => [],
+    'total_cost' => $order->getTotalCost()
+];
+
+// Добавляем информацию о запчастях
+foreach ($order->getParts() as $part) {
+    $orderData['parts'][] = [
+        'name' => $part->getName(),
+        'quantity' => $part->getQuantity(),
+        'cost' => $part->getCost()
+    ];
+}
+
+// Добавляем информацию о материалах
+foreach ($order->getMaterials() as $material) {
+    $orderData['materials'][] = [
+        'name' => $material->getName(),
+        'quantity' => $material->getQuantity(),
+        'cost' => $material->getCost()
+    ];
+}
+
+// Преобразуем данные в формат JSON
+$orderJson = json_encode($orderData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+// Создаем логгер Monolog
+$log = new Logger('orders');
+$log->pushHandler(new StreamHandler(__DIR__ . '/log/orders.log', Logger::INFO));
+
+// Записываем данные заказа в файл
+try {
+    $filesystem->dumpFile($filePath, $orderJson);
+    echo "Данные заказа успешно записаны в файл.\n";
+
+    // Записываем информацию о записи в лог
+    $log->info('Данные заказа успешно записаны в файл', ['file_path' => $filePath]);
+} catch (IOExceptionInterface $exception) {
+    echo "Ошибка при записи данных заказа в файл: " . $exception->getMessage() . "\n";
+
+    // Записываем информацию об ошибке в лог
+    $log->error('Ошибка при записи данных заказа в файл', ['exception_message' => $exception->getMessage()]);
+}
+
+
