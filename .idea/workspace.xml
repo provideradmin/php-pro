@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fd65c35-d295-4668-bb54-0b0433be508e" name="Changes" comment="CarMaster with composer">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.php" afterDir="false" />
-    </list>
+    <list default="true" id="9fd65c35-d295-4668-bb54-0b0433be508e" name="Changes" comment="CarMaster with composer uses all components" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -162,7 +159,7 @@
       <workItem from="1714036471196" duration="13930000" />
       <workItem from="1714055248923" duration="1892000" />
       <workItem from="1714060602926" duration="4641000" />
-      <workItem from="1714115853088" duration="3773000" />
+      <workItem from="1714115853088" duration="4099000" />
     </task>
     <task id="LOCAL-00001" summary="CarMaster with composer">
       <option name="closed" value="true" />
@@ -172,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714062784361</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="CarMaster with composer uses all components">
+      <option name="closed" value="true" />
+      <created>1714119979462</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714119979462</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +200,7 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="CarMaster with composer" />
-    <option name="LAST_COMMIT_MESSAGE" value="CarMaster with composer" />
+    <MESSAGE value="CarMaster with composer uses all components" />
+    <option name="LAST_COMMIT_MESSAGE" value="CarMaster with composer uses all components" />
   </component>
 </project>

@@ -1,2 +1,0 @@
-[2024-04-26T08:24:07.469993+00:00] orders.INFO: Данные заказа успешно записаны в файл {"file_path":"/mnt/c/php-pro/files//order.json"} []
-[2024-04-26T08:24:33.618674+00:00] orders.INFO: Данные заказа успешно записаны в файл {"file_path":"/mnt/c/php-pro/files//order.json"} []

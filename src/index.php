@@ -238,7 +238,7 @@ $orderJson = json_encode($orderData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
 
 // Создаем логгер Monolog
 $log = new Logger('orders');
-$log->pushHandler(new StreamHandler(__DIR__ . '/log/orders.log', Logger::INFO));
+$log->pushHandler(new StreamHandler(dirname(__DIR__) . '/log/orders.log', Logger::INFO));
 
 // Записываем данные заказа в файл
 try {
