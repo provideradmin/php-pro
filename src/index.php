@@ -207,17 +207,8 @@ try {
 $filePath = $directoryPath . '/order.json';
 
 // Создаем данные заказа для записи в файл
-$orderData = [
-    'order_number' => $order->getOrderNumber(),
-    'creation_date' => $order->getCreationDate(),
-    'client_name' => $order->getClient()->getName(),
-    'car_info' => $order->getCar()->getBrand() . ' ' . $order->getCar()->getModel() . ' (' . $order->getCar()->getYear(
-        ) . ')',
-    'service_name' => $order->getService()->getName(),
-    'parts' => [],
-    'materials' => [],
-    'total_cost' => $order->getTotalCost()
-];
+$orderData = $order->getOrderData();
+
 
 // Добавляем информацию о материалах
 $order->addProductsToOrderData($order->getParts());

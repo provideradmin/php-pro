@@ -120,6 +120,23 @@ class Order
             $this->orderData[$product->getType()][] = $product->getProductData();
         }
     }
+
+// выносим из индекса создание массива.
+    public function getOrderData(): array
+    {
+        return [
+            'order_number' => $this->getOrderNumber(),
+            'creation_date' => $this->getCreationDate(),
+            'client_name' => $this->getClient()->getName(),
+            'car_info' => $this->getCar()->getBrand() . ' ' . $this->getCar()->getModel() . ' (' . $this->getCar(
+                )->getYear() . ')',
+            'service_name' => $this->getService()->getName(),
+            'parts' => [],
+            'materials' => [],
+            'total_cost' => $this->getTotalCost()
+        ];
+    }
+
 }
 
 ?>

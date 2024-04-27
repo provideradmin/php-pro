@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fd65c35-d295-4668-bb54-0b0433be508e" name="Changes" comment="CarMaster with composer uses all components">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/order.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/order.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/orders.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/orders.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CarMaster/Material.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/CarMaster/Material.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CarMaster/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/CarMaster/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CarMaster/Part.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/CarMaster/Part.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CarMaster/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/CarMaster/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -192,7 +186,8 @@
       <workItem from="1714060602926" duration="4641000" />
       <workItem from="1714115853088" duration="4099000" />
       <workItem from="1714155282229" duration="2089000" />
-      <workItem from="1714157445178" duration="9960000" />
+      <workItem from="1714157445178" duration="11004000" />
+      <workItem from="1714243848630" duration="1375000" />
     </task>
     <task id="LOCAL-00001" summary="CarMaster with composer">
       <option name="closed" value="true" />

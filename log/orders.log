@@ -4,3 +4,4 @@
 [2024-04-26T20:54:43.947313+00:00] orders.INFO: Данные заказа успешно записаны в файл {"file_path":"/var/www/html/files//order.json"} []
 [2024-04-26T21:25:35.517258+00:00] orders.INFO: Данные заказа успешно записаны в файл {"file_path":"/var/www/html/files//order.json"} []
 [2024-04-26T21:30:48.218861+00:00] orders.INFO: Данные заказа успешно записаны в файл {"file_path":"/var/www/html/files//order.json"} []
+[2024-04-27T19:15:18.141911+00:00] orders.INFO: Данные заказа успешно записаны в файл {"file_path":"/var/www/html/files//order.json"} []
