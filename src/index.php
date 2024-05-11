@@ -16,6 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use PDO;
 
 $faker = Factory::create();
 $client1 = new Client($faker->name, $faker->email, $faker->phoneNumber);
@@ -211,8 +212,7 @@ $orderData = [
     'order_number' => $order->getOrderNumber(),
     'creation_date' => $order->getCreationDate(),
     'client_name' => $order->getClient()->getName(),
-    'car_info' => $order->getCar()->getBrand() . ' ' . $order->getCar()->getModel() . ' (' . $order->getCar()->getYear(
-        ) . ')',
+    'car_info' => $order->getCar()->getBrand() . ' ' . $order->getCar()->getModel() . ' (' . $order->getCar()->getYear() . ')',
     'service_name' => $order->getService()->getName(),
     'parts' => [],
     'materials' => [],
@@ -246,3 +246,67 @@ try {
     // Записываем информацию об ошибке в лог
     $log->error('Ошибка при записи данных заказа в файл', ['exception_message' => $exception->getMessage()]);
 }
+
+$host = 'db';
+$port = 3306;
+$dbname = 'carmaster_db';
+$username = 'carmaster_user';
+$password = 'carmaster123';
+
+
+$dsn = "mysql:host=$host;port=$port;dbname=$dbname";
+
+try {
+    $pdo = new PDO($dsn, $username, $password);
+    echo "Подключились к базе";
+} catch (PDOException $e) {
+    die("ошибка подключения: " . $e->getMessage());
+}
+
+$faker = Factory::create();
+
+$partRepository = new PartRepository($pdo);
+
+// Заполняем таблицу `parts` 10 записями
+for ($i = 0; $i < 10; $i++) {
+    $name = $faker->word;
+    $cost = $faker->randomFloat(2, 10, 1000);
+    $quantity = $faker->numberBetween(1, 1000);
+    $sellingPrice = $faker->randomFloat(2, $cost, $cost + 500);
+
+    $part = new Part($name, $cost, $quantity, $sellingPrice);
+
+    // Добавляем новую запись в таблицу
+    $partRepository->create($part);
+}
+echo "Таблица parts заполнена 10 записями.\n";
+
+// Выводим все с изменениями
+$parts = $partRepository->findAll();
+$output = new ConsoleOutput();
+$io = new SymfonyStyle($input, $output);
+$io->section("All parts:");
+$io->table(['ID', 'Name', 'Cost', 'Quantity', 'Selling Price'], array_map(function ($part) {
+    return [$part->getId(), $part->getName(), $part->getCost(), $part->getQuantity(), $part->getSellingPrice()];
+}, $parts));
+// Обновляем первую запчасть
+$partToUpdate = $parts[0];
+$partToUpdate->setName('Запчасть обновленная');
+$partToUpdate->setCost(15.99);
+$partRepository->update($partToUpdate);
+echo "Обновили запчасть с ID: " . $partToUpdate->getId() . PHP_EOL;
+
+// Получаем последние 5 записей
+$partsToDelete = array_slice($parts, -5);
+// Удаляем каждую запись
+foreach ($partsToDelete as $partToDelete) {
+    $partRepository->delete($partToDelete->getId());
+}
+
+// Выводим все с изменениями
+$output = new ConsoleOutput();
+$io = new SymfonyStyle($input, $output);
+$io->section("Обновили запчасти:");
+$io->table(['ID', 'Name', 'Cost', 'Quantity', 'Selling Price'], array_map(function ($part) {
+    return [$part->getId(), $part->getName(), $part->getCost(), $part->getQuantity(), $part->getSellingPrice()];
+}, $parts));
