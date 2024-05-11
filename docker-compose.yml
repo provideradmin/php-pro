@@ -7,9 +7,17 @@ services:
       - "80:80"
     volumes:
       - ./db:/db
+      - ./:/home/php-pro
     environment:
       - PHP_IDE_CONFIG
       - XDEBUG_CONFIG
+      - DB_HOST=db
+      - DB_NAME=carmaster_db
+      - DB_USER=carmaster_user
+      - DB_PASSWORD=carmaster123
+      - DB_ROOT_PASSWORD=1304
+    depends_on:
+      - db
 
   db:
     image: mysql:8
@@ -24,6 +32,5 @@ services:
       - db:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     command: ["--init-file", "/docker-entrypoint-initdb.d/init.sql"]
-
 volumes:
   db:

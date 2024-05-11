@@ -4,13 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fd65c35-d295-4668-bb54-0b0433be508e" name="Changes" comment="CarMaster with docker-compose and DB">
+    <list default="true" id="9fd65c35-d295-4668-bb54-0b0433be508e" name="Changes" comment="CarMaster with PartRepository and sql fixed and indexed">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fixed.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql_query_fixme.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/CarMaster/PartRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2b666212-9442-4303-af79-7a57c677f79a.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2b666212-9442-4303-af79-7a57c677f79a/storage_v2/_src_/schema/carmaster_db.J6KnOQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile.php" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/order.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/order.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/orders.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/orders.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CarMaster/Part.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/CarMaster/Part.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +71,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Ubuntu">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="php">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/psr/log" />
       <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
@@ -93,7 +104,7 @@
     </include_path>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -108,26 +119,34 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Database Script.fixed.sql.executor": "Run",
     "Database Script.init.sql.executor": "Run",
+    "Database Script.sql_query_fixme.sql.executor": "Run",
     "Docker.Dockerfile.executor": "Run",
+    "Docker.PHP+DB.executor": "Run",
+    "Docker.Unnamed.executor": "Run",
     "Docker.docker-compose.yml.db: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.php: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml[php, db]: Compose Deployment.executor": "Run",
+    "JavaScript Debug.Dockerfile.php.executor": "Run",
     "PHP Script.index.php.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm": "WSL",
-    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm": "WSL",
+    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm": "Docker Compose",
+    "credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm": "Docker Compose",
     "dumpAutoload C:/php-pro/composer.json": "--no-interaction --ansi --verbose",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Lenovo/php-pro",
+    "last_opened_file_path": "C:/php-pro",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "database.query.execution",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -135,10 +154,11 @@
       "mysql"
     ],
     "RunConfigurationTargetLRU": [
-      "7e8d8075-1e75-4e53-96d3-b00836d6cc83",
       "2b666212-9442-4303-af79-7a57c677f79a",
       "96f1bd81-297e-485f-84cb-47fdfea31e3b",
-      "69f45bf1-1894-49fc-8038-8efb2af20d7d"
+      "69f45bf1-1894-49fc-8038-8efb2af20d7d",
+      "093da65e-e13d-4839-a776-c546762be19e",
+      "093da65e-e13d-4839-a776-c546762be19e/schema/\"carmaster_db\""
     ]
   }
 }]]></component>
@@ -149,25 +169,45 @@
       <recent name="C:\php-pro\src\CarMaster" />
     </key>
   </component>
-  <component name="RunManager" selected="Database Script.init.sql">
+  <component name="RunManager" selected="PHP Script.index.php">
+    <configuration name="fixed.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/fixed.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="093da65e-e13d-4839-a776-c546762be19e" namespace="schema/&quot;carmaster_db&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="init.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/init.sql" />
       <script-mode>FILE</script-mode>
       <data-source id="69f45bf1-1894-49fc-8038-8efb2af20d7d" />
       <method v="2" />
     </configuration>
+    <configuration name="sql_query_fixme.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/sql_query_fixme.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="093da65e-e13d-4839-a776-c546762be19e" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Dockerfile.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/php-pro/Dockerfile.php" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/src/index.php">
       <CommandLine>
         <PhpTestInterpreterSettings>
-          <option name="interpreterName" value="Ubuntu" />
+          <option name="interpreterName" value="php" />
         </PhpTestInterpreterSettings>
+        <envs>
+          <env name="DB_HOST" value="db" />
+        </envs>
       </CommandLine>
       <method v="2" />
     </configuration>
-    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
-      <deployment type="dockerfile">
+    <configuration name="PHP+DB" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+      <deployment type="docker-compose.yml">
         <settings>
-          <option name="sourceFilePath" value="Dockerfile" />
+          <option name="envFilePath" value="" />
+          <option name="sourceFilePath" value="docker-compose.yml" />
+          <option name="upDetach" value="false" />
         </settings>
       </deployment>
       <method v="2" />
@@ -178,34 +218,21 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.db: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="db" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="Database Script.fixed.sql" />
+      <item itemvalue="Database Script.sql_query_fixme.sql" />
+      <item itemvalue="Database Script.init.sql" />
+      <item itemvalue="Docker.PHP+DB" />
+      <item itemvalue="JavaScript Debug.Dockerfile.php" />
+      <item itemvalue="PHP Script.index.php" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Database Script.init.sql" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml.db: Compose Deployment" />
         <item itemvalue="PHP Script.index.php" />
-        <item itemvalue="Docker.Dockerfile" />
+        <item itemvalue="Database Script.fixed.sql" />
+        <item itemvalue="Database Script.sql_query_fixme.sql" />
+        <item itemvalue="JavaScript Debug.Dockerfile.php" />
+        <item itemvalue="Database Script.init.sql" />
       </list>
     </recent_temporary>
   </component>
@@ -236,7 +263,10 @@
       <workItem from="1714157445178" duration="9960000" />
       <workItem from="1714722371961" duration="3555000" />
       <workItem from="1714860955848" duration="3602000" />
-      <workItem from="1715013866829" duration="5015000" />
+      <workItem from="1715013866829" duration="5681000" />
+      <workItem from="1715267602812" duration="6914000" />
+      <workItem from="1715351943532" duration="14510000" />
+      <workItem from="1715436483499" duration="7746000" />
     </task>
     <task id="LOCAL-00001" summary="CarMaster with composer">
       <option name="closed" value="true" />
@@ -270,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715015242848</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="CarMaster with docker-compose and DB">
+      <option name="closed" value="true" />
+      <created>1715019046969</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715019046969</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,6 +338,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/src/CarMaster" />
       <path value="$PROJECT_DIR$" />
@@ -307,6 +346,7 @@
     <MESSAGE value="CarMaster with composer" />
     <MESSAGE value="CarMaster with composer uses all components" />
     <MESSAGE value="CarMaster with docker-compose and DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="CarMaster with docker-compose and DB" />
+    <MESSAGE value="CarMaster with PartRepository and sql fixed and indexed" />
+    <option name="LAST_COMMIT_MESSAGE" value="CarMaster with PartRepository and sql fixed and indexed" />
   </component>
 </project>
