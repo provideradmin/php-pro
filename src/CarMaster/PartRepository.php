@@ -15,11 +15,17 @@ class PartRepository
         $this->pdo = $pdo;
     }
 
-    public function create(Part $part): bool
+    public function create(Part $part): int
     {
         $query = "INSERT INTO parts (name, cost, quantity, selling_price) VALUES (?, ?, ?, ?)";
         $statement = $this->pdo->prepare($query);
-        return $statement->execute([$part->getName(), $part->getCost(), $part->getQuantity(), $part->getSellingPrice()]);
+        $success = $statement->execute([$part->getName(), $part->getCost(), $part->getQuantity(), $part->getSellingPrice()]);
+
+        if ($success) {
+            return (int)$this->pdo->lastInsertId();
+        } else {
+            throw new \RuntimeException("Почему-то не вставилось.");
+        }
     }
 
     public function update(Part $part): bool

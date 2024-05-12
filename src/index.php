@@ -258,7 +258,6 @@ $dsn = "mysql:host=$host;port=$port;dbname=$dbname";
 
 try {
     $pdo = new PDO($dsn, $username, $password);
-    echo "Подключились к базе";
 } catch (PDOException $e) {
     die("ошибка подключения: " . $e->getMessage());
 }
@@ -275,11 +274,11 @@ for ($i = 0; $i < 10; $i++) {
     $sellingPrice = $faker->randomFloat(2, $cost, $cost + 500);
 
     $part = new Part($name, $cost, $quantity, $sellingPrice);
+// пользуем идентификатор
+    $partId = $partRepository->create($part);
+    echo "Вставили ID: $partId\n";
 
-    // Добавляем новую запись в таблицу
-    $partRepository->create($part);
 }
-echo "Таблица parts заполнена 10 записями.\n";
 
 // Выводим все с изменениями
 $parts = $partRepository->findAll();
