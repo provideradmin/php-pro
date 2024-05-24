@@ -1,13 +1,12 @@
 services:
   php:
     build:
-      context: .
-      dockerfile: Dockerfile.php
-    ports:
-      - "80:80"
+      context: ./docker
+      target: php-dev
+      args:
+        XDEBUG_ENABLED: ${XDEBUG_ENABLED-false}
     volumes:
-      - ./db:/db
-      - ./:/home/php-pro
+      - ./:${CODE_MOUNT_PATH}:delegated
     environment:
       - PHP_IDE_CONFIG
       - XDEBUG_CONFIG
@@ -18,7 +17,16 @@ services:
       - DB_ROOT_PASSWORD=1304
     depends_on:
       - db
-
+  nginx:
+    build:
+      context: ./docker
+      target: nginx-dev
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./:${CODE_MOUNT_PATH}:delegated
   db:
     image: mysql:8
     ports:
@@ -31,6 +39,6 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    command: ["--init-file", "/docker-entrypoint-initdb.d/init.sql"]
+    command: [ "--init-file", "/docker-entrypoint-initdb.d/init.sql" ]
 volumes:
   db:

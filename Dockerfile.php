@@ -1,5 +1,5 @@
-# Используем базовый образ с PHP 8.3 и Apache на последней стабильной версии Ubuntu
-FROM php:8.3-apache
+# Используем базовый образ с PHP 8.3 и PHP-FPM на последней стабильной версии Ubuntu
+FROM php:8.3-fpm
 
 # Installs extra libraries
 RUN apt-get update && apt-get install -y \
@@ -23,7 +23,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 # Setup Xdebug
 ARG XDEBUG_ENABLED=false
-RUN if $XDEBUG_ENABLED; then pecl install xdebug \
+RUN if [ "$XDEBUG_ENABLED" = "true" ]; then pecl install xdebug \
 && docker-php-ext-enable xdebug \
 && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
 && echo "xdebug.max_nesting_level=1000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
